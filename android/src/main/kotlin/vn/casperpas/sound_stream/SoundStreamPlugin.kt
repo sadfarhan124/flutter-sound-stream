@@ -387,10 +387,15 @@ public class SoundStreamPlugin : FlutterPlugin,
                 val shortOut = recorder.read(data, 0, mPeriodFrames)
                 // https://flutter.io/platform-channels/#codec
                 // convert short to int because of platform-channel's limitation
-                val byteBuffer = ByteBuffer.allocate(shortOut * 2)
-                byteBuffer.order(ByteOrder.LITTLE_ENDIAN).asShortBuffer().put(data)
+                try{
+                    val byteBuffer = ByteBuffer.allocate(shortOut * 2)
+                    byteBuffer.order(ByteOrder.LITTLE_ENDIAN).asShortBuffer().put(data)
 
-                sendEventMethod("dataPeriod", byteBuffer.array())
+                    sendEventMethod("dataPeriod", byteBuffer.array())
+                }catch (e : IllegalArgumentException){
+
+                }
+
             }
         }
     }
