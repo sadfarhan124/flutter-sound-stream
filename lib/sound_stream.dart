@@ -36,8 +36,13 @@ class SoundStream {
   Future<dynamic> _onMethodCall(MethodCall call) async {
     switch (call.method) {
       case "platformEvent":
-        _eventsStreamController.add(call.arguments);
-        break;
+        try{
+          _eventsStreamController.add(call.arguments);
+          break;
+        }on Exception catch(_){
+
+        }
+       
     }
     return null;
   }
